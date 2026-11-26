@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root,
+[data-theme="light"] {
+  --bg-page: #e9ebef;
+  --bg-surface: #ccd0dd;
+  --bg-elevated: #ffffff;
+  --bg-footer: #1e2f66;
+  --bg-footer-end: #2b417a;
+  --text-primary: #2d313e;
+  --text-brand: #263a7c;
+  --text-success: #0b5d1e;
+  --text-inverse: #ffffff;
+  --border-subtle: #bcc3d4;
+  --shadow-overlay: 0 8px 24px rgb(15 23 42 / 0.12);
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg-page: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-elevated: #1e293b;
+    --bg-footer: #0b132b;
+    --bg-footer-end: #172554;
+    --text-primary: #f1f5f9;
+    --text-brand: #93b4ff;
+    --text-success: #4ade80;
+    --text-inverse: #ffffff;
+    --border-subtle: #334155;
+    --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.45);
+    color-scheme: dark;
   }
 }
 
+[data-theme="dark"] {
+  --bg-page: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-elevated: #1e293b;
+  --bg-footer: #0b132b;
+  --bg-footer-end: #172554;
+  --text-primary: #f1f5f9;
+  --text-brand: #93b4ff;
+  --text-success: #4ade80;
+  --text-inverse: #ffffff;
+  --border-subtle: #334155;
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.45);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-page: var(--bg-page);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-footer: var(--bg-footer);
+  --color-footer-end: var(--bg-footer-end);
+  --color-foreground: var(--text-primary);
+  --color-brand: var(--text-brand);
+  --color-success: var(--text-success);
+  --color-inverse: var(--text-inverse);
+  --color-border-subtle: var(--border-subtle);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+/* Theme-aware logo visibility without hydration mismatch */
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .logo-dark {
+    display: block;
+  }
+}
+
+[data-theme="dark"] .logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+  display: block;
+}
+
+.footer-surface {
+  background-color: var(--bg-footer);
+  background-image: linear-gradient(
+    90deg,
+    var(--bg-footer) 0%,
+    var(--bg-footer-end) 100%
+  );
+  color: var(--text-inverse);
+}
+
+.overlay-elevation {
+  box-shadow: var(--shadow-overlay);
+}
+
+@keyframes kenBurnsIn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurnsIn 5.5s ease-out forwards;
 }
